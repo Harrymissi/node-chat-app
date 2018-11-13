@@ -7,11 +7,6 @@ socket.on('connect', function() {
     //     to: "jeb@qq.com",
     //     text: 'Hey this is Harry.'
     // });
-
-    socket.emit('createMessage', {
-        from: 'Harry',
-        test: 'hey ya'
-    })
 });
 
 socket.on('disconnect', function() {
