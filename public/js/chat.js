@@ -17,21 +17,31 @@ function scrollToButtom() {
 }
 
 socket.on('connect', function() {
-    console.log('Connected to server');
+   var params = jQuery.deparam(window.location.search);
 
-    // socket.emit('createEmail', {
-    //     to: "jeb@qq.com",
-    //     text: 'Hey this is Harry.'
-    // });
+   socket.emit('join', params, function (err) {
+       if (err) {
+           alert(err);
+           window.location.href = '/';
+       } else {
+           console.log('No error');
+       }
+   });
 });
 
 socket.on('disconnect', function() {
     console.log('Disconnect from server');
 });
 
-// socket.on('newEmail', function (email) {
-//     console.log('New email', email);
-// });
+socket.on('updateUserList', users => {
+    var ol = jQuery('<ol></ol>');
+
+    users.forEach(user => {
+        ol.append(jQuery('<li></li>').text(user));
+    });
+
+    jQuery('#users').html(ol);
+});
 
 socket.on('newMessage', function (message) {
     var formattedTime = moment(message.createAt).format('h:mm a');
